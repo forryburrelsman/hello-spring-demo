@@ -4,17 +4,31 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("hello")
+@ResponseBody
 public class HelloSpringController {
 
-    // Responds to get requests at /hello?coder=LaunchCoder
-    @RequestMapping(value="hello", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public String hello(@RequestParam String coder){
-        return "Hello " + coder;
+    // lives at /hello/goodbye
+    @GetMapping("goodbye")
+    public String goodbye(){
+        return "Goodbye, world";
     }
 
-    @GetMapping
-    @ResponseBody
+
+    // Responds to get requests at /hello?name=LaunchCode
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+    public String hello(@RequestParam String name){
+        return "Hello " + name;
+    }
+
+    // Handles requests of the form /hello/LaunchCode
+    @GetMapping("{name}")
+    public String helloWithPathParam(@PathVariable String name){
+        return "Hello, " + name + "!";
+    }
+
+    // hello/form
+    @GetMapping("form")
     public String helloForm(){
         String html =
                 "<html>" +
@@ -26,26 +40,6 @@ public class HelloSpringController {
                         "</body>" +
                         "</html>";
         return html;
-    }
-
-    // Responds to get requests at /hello/LaunchCode
-    @GetMapping("hello/{name}")
-    @ResponseBody
-    public String helloAgain(@PathVariable String name){
-        return "Hello, " + name;
-    }
-
-    // responds to post requests at "/goodbye"
-    @PostMapping("goodbye")
-    @ResponseBody
-    public String goodbye(){
-        return "Goodbye, world";
-    }
-
-    @RequestMapping(value = "hellogoodbye", method = {RequestMethod.GET, RequestMethod.POST})
-    @ResponseBody
-    public String hellogoodbye(){
-         return "Hello world, goodbye world.";
     }
 
 
