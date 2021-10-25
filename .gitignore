@@ -30,3 +30,4 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/test/java/org/launchcode/hellospring/controllers/HelloController.java
